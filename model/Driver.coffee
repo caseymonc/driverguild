@@ -33,7 +33,7 @@ module.exports = (db) ->
 				return cb err if err?
 				cb null, driver
 
-	DriverSchema.statics.complete = (driver_uri, cb)->
+	DriverSchema.statics.complete = (driver_uri, delivery_id, cb)->
 		@findOne({uri: driver_uri}).exec (err, driver)=>
 			return cb err if err
 			return cb {error : "No Driver"} if not driver
