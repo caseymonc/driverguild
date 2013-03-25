@@ -31,8 +31,7 @@ module.exports = (Driver, EventController) =>
 
 
 	deliveryComplete: (body)=>
-		bid = body.bids[0]
-		Driver.complete bid.driverUri, body.delivery_id, (err)=>
+		Driver.complete body.driverUri, body.delivery_id, (err)=>
 			return console.log err if err
 			console.log "Succeeded?"
 
