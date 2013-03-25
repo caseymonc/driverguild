@@ -5,9 +5,21 @@ Schema = mongoose.Schema
 module.exports = (db) ->
 
 	DriverSchema = new Schema({
-		uri: { type: String, unique: true }
-	}, { collection : 'drivers' })
+		uri: { type: String, unique: true },
+		deliveries: [{price: Number, pickup: Date, due: Date, complete: Date, delivery_id: String}]
+	}, { collection : 'guild_drivers' })
 
+
+	DriverSchema.statics.addDelivery = (driver_uri, delivery, cb)->
+		@findOne({uri: driver_uri}).exec (err, driver)=>
+			return cb err if err
+			return cb {error : "No Driver"} if not driver
+
+			driver.deliveries = [] if not driver.deliveries?
+			driver.deliveries.push(delivery)
+			driver.save (err)=>
+				return cb err if err?
+				cb null, driver
 
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
