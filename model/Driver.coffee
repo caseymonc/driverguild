@@ -39,7 +39,7 @@ module.exports = (db) ->
 			return cb {error : "No Driver"} if not driver
 			return cb {error : "No Deliveries"} if not driver.deliveries
 			for delivery in driver.deliveries
-				if "#{delivery._id}" == "#{delivery_id}"
+				if "#{delivery.delivery_id}" == "#{delivery_id}"
 					delivery.complete = new Date()
 					break
 			console.log driver
