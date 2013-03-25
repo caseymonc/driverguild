@@ -18,7 +18,8 @@ module.exports = (Driver, EventController) =>
 	bidAwarded: (body)=>
 		bid = body.bids[0]
 		EventController.sendExternalEvent bid.driverUri, "rfq", "bid_awarded", body
-		Driver.addDelivery bid.driverUri, {price: bid.bid, due: body.deliveryTime, delivery_id: body.delivery_id}
+		Driver.addDelivery bid.driverUri, {price: bid.bid, due: body.deliveryTime, delivery_id: body.delivery_id}, (err)=>
+
 
 	deliveryPickedUp: (body)=>
 		#Track delivery picked up
