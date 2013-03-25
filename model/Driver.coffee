@@ -34,7 +34,7 @@ module.exports = (db) ->
 				cb null, driver
 
 	DriverSchema.statics.complete = (driver_uri, cb)->
-		@update({uri: driver_uri}, {deliveries.complete: new Date()}).exec cb
+		@update({uri: driver_uri}, {complete: new Date()}).exec cb
 
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
