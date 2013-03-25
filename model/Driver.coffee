@@ -52,7 +52,7 @@ module.exports = (db) ->
 
 	DriverSchema.statics.registerDriver = (uri, cb) ->
 		console.log "Uri: " + uri
-		@find({uri: uri}).exec (err, driver)=>
+		@findOne({uri: uri}).exec (err, driver)=>
 			#return cb err if err?
 			console.log driver if driver?
 			return cb {"error", "Already Exists"} if driver?
