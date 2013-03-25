@@ -3,6 +3,7 @@ fs = require 'fs'
 MemoryStore = require('express').session.MemoryStore
 Mongoose = require 'mongoose'
 DeliveryModel = require './model/Delivery'
+DriverModel = require './model/Driver'
 request = require "request"
 https = require('https')
 event = require('events')
@@ -13,18 +14,17 @@ DB = process.env.DB || 'mongodb://localhost:27017/shop'
 db = Mongoose.createConnection DB
 
 Delivery = DeliveryModel db
+Driver = DriverModel db
+
+DriverControl = require './control/DriverController'
+DriverController = new DriverControl(Driver, EventController)
 
 mongomate = require('mongomate')('mongodb://localhost')
 
 PORT = 3040
 exports.createServer = ->
-	privateKey = fs.readFileSync('./cert/server.key').toString();
-	certificate = fs.readFileSync('./cert/server.crt').toString(); 
 
 	app = express()
-
-	server = https.createServer({key: privateKey, cert: certificate}, app).listen PORT, ()->
-		console.log "Running Foursquare Service on port: " + PORT
 
 	app.configure ->
 		app.use(express.cookieParser())
@@ -49,15 +49,21 @@ exports.createServer = ->
 
 
 	EventEmitter.on "rfq:delivery_ready", (body)=>
-		DeliveryController.addBid body
+		DriverController.deliveryReady body
 
 	EventEmitter.on 'rfq:bid_awarded', (body)=>
-		DriverController.registerDriver body
+		DriverController.bidAwarded body
 
 	EventEmitter.on 'delivery:picked_up', (body)=>
-		DriverController.unRegisterDriver body
+		DriverController.deliveryPickedUp body
 
 	EventEmitter.on 'delivery:complete', (body)=>
+		DriverController.deliveryComplete body
+
+	EventEmitter.on 'rfq:driver_ready', (body)=>
+		DriverController.registerDriver body
+
+	EventEmitter.on 'rfq:driver_done', (body)=>
 		DriverController.unRegisterDriver body
 
 
@@ -67,4 +73,5 @@ exports.createServer = ->
 
 if module == require.main
 	app = exports.createServer()
-	app.listen 3040
+	app.listen PORT
+	console.log "Running Foursquare Service on port: " + PORT
