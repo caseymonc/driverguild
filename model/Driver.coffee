@@ -42,6 +42,7 @@ module.exports = (db) ->
 				if delivery.delivery_id == delivery_id
 					delivery.complete = new Date()
 					break
+			console.log driver
 			driver.save (err)=>
 				return cb err if err?
 				cb null, driver
