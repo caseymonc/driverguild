@@ -21,6 +21,12 @@ module.exports = (db) ->
 				return cb err if err?
 				cb null, driver
 
+	DriverSchema.statics.pickedUp = (driver_uri, cb)->
+		@update({uri: driver_uri}, {pickup: new Date()}).exec cb
+
+	DriverSchema.statics.complete = (driver_uri, cb)->
+		@update({uri: driver_uri}, {complete: new Date()}).exec cb
+
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
 

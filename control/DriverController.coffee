@@ -25,14 +25,14 @@ module.exports = (Driver, EventController) =>
 
 	deliveryPickedUp: (body)=>
 		bid = body.bids[0]
-		Driver.pickedUp bid.driverUri, {pickup: new Date()}, (err)=>
+		Driver.pickedUp bid.driverUri, (err)=>
 			return console.log err if err
 			console.log "Succeeded?"
 
 
 	deliveryComplete: (body)=>
 		bid = body.bids[0]
-		Driver.complete bid.driverUri, {complete: new Date()}, (err)=>
+		Driver.complete bid.driverUri, (err)=>
 			return console.log err if err
 			console.log "Succeeded?"
 
