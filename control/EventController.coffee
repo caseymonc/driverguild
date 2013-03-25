@@ -21,12 +21,10 @@ module.exports = (EventEmitter) =>
 			return;
 
 	handleEvent: (req, res)=>
+		console.log "Received Event"
 		data = req.body
 		domain = data._domain
 		name = data._name
-
-		console.log "Domain: " + domain
-		console.log "Name: " + name
 
 		if domain? && name?
 			console.log "Emit Event: " + domain + ":" + name
