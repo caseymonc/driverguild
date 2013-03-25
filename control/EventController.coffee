@@ -25,6 +25,8 @@ module.exports = (EventEmitter) =>
 		domain = data._domain
 		name = data._name
 
+		console.log "Event Body: " + JSON.stringify req.body
+
 		if domain? && name?
 			console.log "Emit Event: " + domain + ":" + name
 			EventEmitter.emit domain + ":" + name, data
