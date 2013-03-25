@@ -11,6 +11,7 @@ module.exports = (db) ->
 
 
 	DriverSchema.statics.addDelivery = (driver_uri, delivery, cb)->
+		console.log driver_uri
 		@findOne({uri: driver_uri}).exec (err, driver)=>
 			return cb err if err
 			return cb {error : "No Driver"} if not driver
