@@ -19,6 +19,8 @@ module.exports = (Driver, EventController) =>
 		bid = body.bids[0]
 		EventController.sendExternalEvent bid.driverUri, "rfq", "bid_awarded", body
 		Driver.addDelivery bid.driverUri, {price: bid.bid, due: body.deliveryTime, delivery_id: body.delivery_id}, (err)=>
+			return console.log err if err
+			console.log "Succeeded?"
 
 
 	deliveryPickedUp: (body)=>
