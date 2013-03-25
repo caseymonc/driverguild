@@ -34,7 +34,17 @@ module.exports = (db) ->
 				cb null, driver
 
 	DriverSchema.statics.complete = (driver_uri, cb)->
-		@update({uri: driver_uri}, {complete: new Date()}).exec cb
+		@findOne({uri: driver_uri}).exec (err, driver)=>
+			return cb err if err
+			return cb {error : "No Driver"} if not driver
+			return cb {error : "No Deliveries"} if not driver.deliveries
+			for delivery in driver.deliveries
+				if delivery.delivery_id == delivery_id
+					delivery.complete = new Date()
+					break
+			driver.save (err)=>
+				return cb err if err?
+				cb null, driver
 
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
