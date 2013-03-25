@@ -13,7 +13,7 @@ module.exports = (Driver, EventController) =>
 	deliveryReady: (body)=>
 		Driver.getAllRegisteredDrivers (err, drivers)=>
 			return console.log err if err
-			EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers
+			EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", body for driver in drivers
 
 	bidAwarded: (body)=>
 		bid = body.bids[0]
