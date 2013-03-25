@@ -44,6 +44,7 @@ exports.createServer = ->
 		res.render('index', {title: "FlowerShop/Driver"})
 
 	app.post '/event', (req, res)->
+		console.log "Sent Event"
 		EventController.handleEvent req, res
 		res.send "OK"
 
