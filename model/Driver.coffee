@@ -11,7 +11,6 @@ module.exports = (db) ->
 
 
 	DriverSchema.statics.addDelivery = (driver_uri, delivery, cb)->
-		console.log driver_uri
 		@findOne({uri: driver_uri}).exec (err, driver)=>
 			return cb err if err
 			return cb {error : "No Driver"} if not driver
@@ -21,11 +20,21 @@ module.exports = (db) ->
 				return cb err if err?
 				cb null, driver
 
-	DriverSchema.statics.pickedUp = (driver_uri, cb)->
-		@update({uri: driver_uri}, {pickup: new Date()}).exec cb
+	DriverSchema.statics.pickedUp = (driver_uri, delivery_id, cb)->
+		@findOne({uri: driver_uri}).exec (err, driver)=>
+			return cb err if err
+			return cb {error : "No Driver"} if not driver
+			return cb {error : "No Deliveries"} if not driver.deliveries
+			for delivery in driver.deliveries
+				if delivery.delivery_id == delivery_id
+					delivery.pickup = new Date()
+					break
+			driver.save (err)=>
+				return cb err if err?
+				cb null, driver
 
 	DriverSchema.statics.complete = (driver_uri, cb)->
-		@update({uri: driver_uri}, {complete: new Date()}).exec cb
+		@update({uri: driver_uri}, {deliveries.complete: new Date()}).exec cb
 
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
