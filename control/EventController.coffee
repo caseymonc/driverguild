@@ -26,5 +26,6 @@ module.exports = (EventEmitter) =>
 		name = data._name
 
 		if domain? && name?
-			EventEmitter.emit domain + ":" + name, data
 			console.log "Emit Event: " + domain + ":" + name
+			EventEmitter.emit domain + ":" + name, data
+
