@@ -3,6 +3,7 @@ request = require "request"
 module.exports = (Driver, EventController) =>
 	
 	renderDriverList: (req, res)=>
+		console.log "Render Driver"
 		Driver.getAllRegisteredDrivers (err, drivers)=>
 			return res.json {error: err} if err
 			res.render('index', {title: "Drivers", drivers: drivers})
