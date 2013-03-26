@@ -1,0 +1,21 @@
+extends layout
+
+append scripts
+	link(rel="stylesheet", href="/index.css")
+	script(src='/javascript/index.js')
+
+block header
+	h1 #{title}
+
+block content
+	#main
+		ol(data-role="listview", data-inset="false")
+			li(data-icon="none") First
+			li(data-icon="none") First
+
+
+block footer
+
+
+
+	
