@@ -5,6 +5,14 @@ module.exports = (Driver, EventController) =>
 	renderDriverList: (req, res)=>
 		console.log "Render Driver"
 		Driver.getAllRegisteredDrivers (err, drivers)=>
+			for driver in drivers
+				driver.deliveries = [] if not driver.deliveries
+				driver.deliveries.filter (delivery)=>
+					return delivery?.complete?
+
+			drivers.sort (driver1, driver2)=>
+				return driver1.deliveries.length - driver2.deliveries.length
+
 			return res.json {error: err} if err
 			res.render('index', {title: "Drivers", drivers: drivers})
 
