@@ -41,7 +41,7 @@ exports.createServer = ->
 
 
 	app.get '/', (req, res)->
-		res.render('index', {title: "FlowerShop/Driver"})
+		DriverController.renderDriverList req, res
 
 	app.post '/event', (req, res)->
 		console.log "Sent Event"
