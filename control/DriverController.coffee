@@ -9,7 +9,15 @@ module.exports = (Driver, EventController) =>
 				driver.deliveries = [] if not driver.deliveries
 				driver.deliveries.filter (delivery)-> typeof delivery.complete != 'undefined'
 			drivers.sort (driver1, driver2)=>
-				return driver2.deliveries.length - driver1.deliveries.length
+				length1 = 0
+				length2 = 0
+				for delivery in driver1.deliveries
+					if(typeof delivery.complete != 'undefined')
+						length1++
+				for delivery in driver2.deliveries
+					if(typeof delivery.complete != 'undefined')
+						length1++
+				return length2 - length1
 
 			return res.json {error: err} if err
 			res.render('index', {title: "Drivers", drivers: drivers})
