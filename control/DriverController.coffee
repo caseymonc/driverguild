@@ -7,7 +7,6 @@ module.exports = (Driver, EventController) =>
 		Driver.getAllRegisteredDrivers (err, drivers)=>
 			for driver in drivers
 				driver.deliveries = [] if not driver.deliveries
-				driver.deliveries.filter (delivery)-> typeof delivery.complete != 'undefined'
 			drivers.sort (driver1, driver2)=>
 				length1 = 0
 				length2 = 0
