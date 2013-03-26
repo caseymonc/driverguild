@@ -15,7 +15,7 @@ module.exports = (Driver, EventController) =>
 						length1++
 				for delivery in driver2.deliveries
 					if(typeof delivery.complete != 'undefined')
-						length1++
+						length2++
 				return length1 - length2
 
 			return res.json {error: err} if err
