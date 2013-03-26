@@ -11,7 +11,7 @@ module.exports = (Driver, EventController) =>
 					return delivery?.complete?
 				console.log driver.name + " " + driver.deliveries
 			drivers.sort (driver1, driver2)=>
-				return driver1.deliveries.length - driver2.deliveries.length
+				return driver2.deliveries.length - driver1.deliveries.length
 
 			return res.json {error: err} if err
 			res.render('index', {title: "Drivers", drivers: drivers})
