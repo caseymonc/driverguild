@@ -10,7 +10,7 @@ module.exports = (Driver, EventController) =>
 
 	registerDriver: (body)=>
 		console.log "Test"
-		Driver.registerDriver body.uri, (err, driver)=>
+		Driver.registerDriver body.uri, body.name, (err, driver)=>
 
 
 	unRegisterDriver: (body)=>

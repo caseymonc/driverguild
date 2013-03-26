@@ -5,6 +5,7 @@ Schema = mongoose.Schema
 module.exports = (db) ->
 
 	DriverSchema = new Schema({
+		name: String,
 		uri: { type: String, unique: true },
 		deliveries: [{price: Number, pickup: Date, due: Date, complete: Date, delivery_id: String}]
 	}, { collection : 'guild_drivers' })
@@ -50,9 +51,9 @@ module.exports = (db) ->
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
 		@find().exec cb
 
-	DriverSchema.statics.registerDriver = (uri, cb) ->
+	DriverSchema.statics.registerDriver = (uri, name, cb) ->
 		console.log "Uri: " + uri
-		@findOne({uri: uri}).exec (err, driver)=>
+		@findOne({uri: uri, name: name}).exec (err, driver)=>
 			#return cb err if err?
 			console.log driver if driver?
 			return cb {"error", "Already Exists"} if driver?
