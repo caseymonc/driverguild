@@ -7,10 +7,7 @@ module.exports = (Driver, EventController) =>
 		Driver.getAllRegisteredDrivers (err, drivers)=>
 			for driver in drivers
 				driver.deliveries = [] if not driver.deliveries
-				driver.deliveries.filter (delivery)=>
-					console.log typeof delivery.complete != 'undefined'
-					return typeof delivery.complete != 'undefined'
-				console.log driver.name + " " + driver.deliveries
+				driver.deliveries.filter (delivery)-> typeof delivery.complete != 'undefined'
 			drivers.sort (driver1, driver2)=>
 				return driver2.deliveries.length - driver1.deliveries.length
 
